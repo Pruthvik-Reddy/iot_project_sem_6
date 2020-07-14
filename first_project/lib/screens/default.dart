@@ -1,5 +1,8 @@
+import 'package:first_project/screens/show_screen.dart';
 import 'package:flutter/material.dart';
 import 'authenticate/authenticate.dart';
+import 'package:provider/provider.dart';
+import 'package:first_project/models/user.dart';
 
 class sign_in_before extends StatefulWidget {
   @override
@@ -9,6 +12,7 @@ class sign_in_before extends StatefulWidget {
 class _sign_in_beforeState extends State<sign_in_before> {
   @override
   Widget build(BuildContext context) {
+    final user=Provider.of<User>(context);
     return new Scaffold(
       appBar: new AppBar(
         title: new Text(
@@ -52,7 +56,10 @@ class _sign_in_beforeState extends State<sign_in_before> {
               var router =
               new MaterialPageRoute(builder: (BuildContext context) {
 
-                return sign_in();
+                if (user==null){
+                  return sign_in();
+                }
+                return second_screen();
               });
               Navigator.of(context).push(router);
             }),

@@ -93,8 +93,19 @@ class _sign_inState extends State<sign_in> {
                   Padding(
                     padding: EdgeInsets.only(top: 20),
                     child: MaterialButton(
-                      onPressed: () {},
-                      //since this is only a UI app
+                      onPressed: () async {
+                        dynamic result = await _auth1.signInAnon();
+                        if (result == null) {
+                          print('error signing in');
+
+                        }
+                        else {
+                          print('signed in');
+                          print(result.uid);
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> second_screen()));
+
+                        }
+                      },
                       child: Text(
                         'SIGN IN',
                         style: TextStyle(
