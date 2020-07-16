@@ -6,6 +6,7 @@ import 'package:first_project/screens/default.dart';
 import 'package:provider/provider.dart';
 import 'package:first_project/services/auth.dart';
 import 'models/user.dart';
+import 'screens/wrapper.dart';
 
 //Stateless widgets are immutable=>they cannot change their states during the runtime of the app;"build" method can only be called once;
 //Stateful widgets are mutable and can be drawn multiple times in their lifetime;

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'authenticate/authenticate.dart';
 import 'package:provider/provider.dart';
 import 'package:first_project/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'wrapper.dart';
 
 class sign_in_before extends StatefulWidget {
   @override
@@ -53,15 +55,7 @@ class _sign_in_beforeState extends State<sign_in_before> {
             ),
             color: Colors.greenAccent,
             onPressed: () {
-              var router =
-              new MaterialPageRoute(builder: (BuildContext context) {
-
-                if (user==null){
-                  return sign_in();
-                }
-                return second_screen();
-              });
-              Navigator.of(context).push(router);
+              return Navigator.of(context).push(MaterialPageRoute(builder: (context) => wrapper()));
             }),
         elevation: 0,
       ),

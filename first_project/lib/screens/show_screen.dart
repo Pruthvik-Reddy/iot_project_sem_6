@@ -32,7 +32,7 @@ class _second_screenState extends State<second_screen> {
     super.initState();
   }
 
-  Widget cardtemplate(name,Nationality,doc_id){
+  Widget cardtemplate(name,Nationality,docid){
     return Card(
       margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
       child: Column(
@@ -60,7 +60,7 @@ class _second_screenState extends State<second_screen> {
             color: Color.fromRGBO(68, 153, 213, 1.0),
             shape: CircleBorder(),
             onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> profile_page(doc_id)));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> profile_page(docid)));
             },
 
           )
