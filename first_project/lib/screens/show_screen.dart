@@ -7,7 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:first_project/boardapp/board_app.dart';
 import 'package:first_project/util/hexcolor.dart';
 import 'package:first_project/ui/First.dart';
-import 'package:first_project/boardapp/ui/custom_card.dart';
+import 'package:first_project/ui/card_list.dart';
 
 
 // ignore: camel_case_types
@@ -22,10 +22,6 @@ class second_screen extends StatefulWidget {
 
 class _second_screenState extends State<second_screen> {
   var cloudfirestoredb = Firestore.instance.collection("board").snapshots();
-  TextEditingController NameInputController;
-  TextEditingController AddressInputController;
-  TextEditingController Criminal_HistoryInputController;
-  TextEditingController possible_threatInputController;
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -34,10 +30,35 @@ class _second_screenState extends State<second_screen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    NameInputController = TextEditingController();
-    AddressInputController = TextEditingController();
-    Criminal_HistoryInputController = TextEditingController();
-    possible_threatInputController = TextEditingController();
+  }
+
+  Widget cardtemplate(name,Nationality){
+    return Card(
+      margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
+      child: Column(
+        children: <Widget>[
+          Text(
+            name,
+            style: TextStyle(
+              fontSize: 18.0,
+              color:Colors.grey[500],
+            ),
+          ),
+          SizedBox(height: 6.0),
+          Text(
+            Nationality,
+            style: TextStyle(
+              fontSize: 14.0,
+              color: Colors.grey[600],
+            ),
+          ),
+          FlatButton(
+
+          )
+
+        ],
+      ),
+    );
   }
 
   Widget build(BuildContext context) {
@@ -66,100 +87,37 @@ class _second_screenState extends State<second_screen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showDialog(context);
+
         },
         child: Icon(Icons.search),
       ),
+
       body: StreamBuilder(
           stream: cloudfirestoredb,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) return CircularProgressIndicator();
-            return ListView.builder(
-                itemCount: snapshot.data.documents.length,
-                itemBuilder: (context, int index) {
-                  var t = CustomCard(
-                      snapshot: snapshot.data ?? " nc", index: index ?? " vsd");
-                  return t ?? " ";
-                  //return Text(snapshot.data.documents[index]['description'] ?? " ");
-                });
-          }),
-    );
+
+              builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) return new Text('Loading...');
+
+
+                return new ListView(
+                  children: snapshot.data.documents.map((document) {
+                    return cardtemplate(document['Name'],document['Nationality']);
+                  }).toList(),
+                );
+
+
+
+              },
+       ),
+
+
+
+          );
+
+
   }
 
-  _showDialog(BuildContext context) async {
-    await showDialog(
-        context: context,
-        child: AlertDialog(
-          contentPadding: EdgeInsets.all(10),
-          content: Column(
-            children: <Widget>[
-              Text("Please fill out the form."),
-              Expanded(
-                  child: TextField(
-                    autofocus: true,
-                    autocorrect: true,
-                    decoration: InputDecoration(labelText: " Name*"),
-                    controller: NameInputController,
-                  )),
-              Expanded(
-                  child: TextField(
-                    autofocus: true,
-                    autocorrect: true,
-                    decoration: InputDecoration(labelText: "Address"),
-                    controller: AddressInputController,
-                  )),
-              Expanded(
-                  child: TextField(
-                    autofocus: true,
-                    autocorrect: true,
-                    decoration: InputDecoration(labelText: "Criminal History*"),
-                    controller: Criminal_HistoryInputController,
-                  )),
-              Expanded(
-                  child: TextField(
-                    autofocus: true,
-                    autocorrect: true,
-                    decoration: InputDecoration(labelText: "Possible Threat"),
-                    controller: possible_threatInputController,
-                  )),
-            ],
-          ),
-          actions: <Widget>[
-            FlatButton(
-                onPressed: () {
-                  NameInputController.clear();
-                  AddressInputController.clear();
-                  Criminal_HistoryInputController.clear();
-                  possible_threatInputController.clear();
 
-                  Navigator.pop(context);
-                },
-                child: Text("Cancel")),
-            FlatButton(
-                onPressed: () {
-                  if (NameInputController.text.isNotEmpty &&
-                      AddressInputController.text.isNotEmpty &&
-                      Criminal_HistoryInputController.text.isNotEmpty &&
-                      possible_threatInputController.text.isNotEmpty) {
-                    Firestore.instance.collection("board").add({
-                      "Name": NameInputController.text,
-                      "Address": AddressInputController.text,
-                      "Criminal History": Criminal_HistoryInputController.text,
-                      "Possible Threat": possible_threatInputController.text,
-                    }).then((response) {
-                      print(response.documentID);
-                      Navigator.pop(context);
-                      NameInputController.clear();
-                      AddressInputController.clear();
-                      Criminal_HistoryInputController.clear();
-                      possible_threatInputController.clear();
-                    }).catchError((error) => print(error));
-                  }
-                },
-                child: Text("Save"))
-          ],
-        ));
-  }
 
   logout() {
     setState(() {

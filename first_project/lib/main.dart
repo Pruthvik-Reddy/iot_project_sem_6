@@ -11,17 +11,20 @@ import 'models/user.dart';
 //Stateful widgets are mutable and can be drawn multiple times in their lifetime;
 
 //void main() => runApp(First());
-void main() => runApp(StreamProvider<User>.value(
-  value: AuthService().user,
-  child:   new MaterialApp(
-    //home : scaffoldexample(),
-    //home: wisdom(),
-    //home: BillSplitter(),
-    //home:sign_in(),
-    theme: new ThemeData(
-      primarySwatch: Colors.blue,
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  return runApp(StreamProvider<User>.value(
+    value: AuthService().user,
+    child:   new MaterialApp(
+      //home : scaffoldexample(),
+      //home: wisdom(),
+      //home: BillSplitter(),
+      //home:sign_in(),
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home:sign_in_before(),
     ),
-    home:sign_in_before(),
-   ),
-)
-);
+  )
+  );
+}
