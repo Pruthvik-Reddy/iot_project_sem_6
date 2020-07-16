@@ -8,7 +8,7 @@ import 'package:first_project/boardapp/board_app.dart';
 import 'package:first_project/util/hexcolor.dart';
 import 'package:first_project/ui/First.dart';
 import 'package:first_project/ui/card_list.dart';
-
+import 'profile_page.dart';
 
 // ignore: camel_case_types
 class second_screen extends StatefulWidget {
@@ -32,7 +32,7 @@ class _second_screenState extends State<second_screen> {
     super.initState();
   }
 
-  Widget cardtemplate(name,Nationality){
+  Widget cardtemplate(name,Nationality,doc_id){
     return Card(
       margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
       child: Column(
@@ -53,6 +53,15 @@ class _second_screenState extends State<second_screen> {
             ),
           ),
           FlatButton(
+            child: Icon(
+              Icons.account_circle,
+              color: Colors.white,
+            ),
+            color: Color.fromRGBO(68, 153, 213, 1.0),
+            shape: CircleBorder(),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> profile_page(doc_id)));
+            },
 
           )
 
@@ -101,7 +110,8 @@ class _second_screenState extends State<second_screen> {
 
                 return new ListView(
                   children: snapshot.data.documents.map((document) {
-                    return cardtemplate(document['Name'],document['Nationality']);
+                    var doc_id=document.documentID;
+                    return cardtemplate(document['Name'],document['Nationality'],doc_id);
                   }).toList(),
                 );
 
