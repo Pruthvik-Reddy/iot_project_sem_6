@@ -11,7 +11,7 @@ import 'screens/wrapper.dart';
 //Stateless widgets are immutable=>they cannot change their states during the runtime of the app;"build" method can only be called once;
 //Stateful widgets are mutable and can be drawn multiple times in their lifetime;
 
-//void main() => runApp(First());
+//void main() => runApp(check());
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   return runApp(StreamProvider<User>.value(

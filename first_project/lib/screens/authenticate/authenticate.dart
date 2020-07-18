@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:first_project/services/auth.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import 'package:first_project/screens/show_screen.dart';
+import 'package:first_project/screens/show_screen_3.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class sign_in extends StatefulWidget {
