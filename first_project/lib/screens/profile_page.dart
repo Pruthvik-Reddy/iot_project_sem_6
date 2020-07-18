@@ -22,7 +22,7 @@ class _MyHomePageState extends State<profile_page> {
   Widget cardtemplate(name) {
     return Card(
       margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
-      child: Column(
+      child: Row(
         children: <Widget>[
           Text(
             name,
@@ -47,25 +47,6 @@ class _MyHomePageState extends State<profile_page> {
       ),
       body: ListView(
         children: <Widget>[
-          StreamBuilder(
-            stream: Firestore.instance.collection("board").document(docid).collection("Dates").snapshots(),
-
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData) return new Text('Loading...');
-
-
-              return new Column(
-                children: snapshot.data.documents.map((document) {
-                  List<String> date_list = List.from(document['Date']);
-                  print(date_list);
-                  return cardtemplate(date_list[0]);
-                }).toList(),
-              );
-
-
-
-            },
-          ),
 
           StreamBuilder<DocumentSnapshot>(
             stream: Firestore.instance.collection('board').document(docid).snapshots(),
@@ -98,6 +79,29 @@ class _MyHomePageState extends State<profile_page> {
             },
 
           ),
+
+
+          StreamBuilder(
+            stream: Firestore.instance.collection("board").document(docid).collection("Dates").snapshots(),
+
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData) return new Text('Loading...');
+
+
+              return new Column(
+                children: snapshot.data.documents.map((document) {
+                  List<String> date_list = List.from(document['Date']);
+                  print(date_list);
+                  for(int i=0;i<date_list.length;i++)
+                  {return cardtemplate(date_list[i]);}
+                }).toList(),
+              );
+
+
+
+            },
+          ),
+
 
 
 

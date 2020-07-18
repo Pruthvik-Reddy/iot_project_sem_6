@@ -21,7 +21,8 @@ class second_screen extends StatefulWidget {
 }
 
 class _second_screenState extends State<second_screen> {
-  var cloudfirestoredb = Firestore.instance.collection("board").snapshots();
+  var cloudfirestoredb = Firestore.instance.collection("board").where("present",isEqualTo: "True").snapshots();
+  var date_1="4/27/2017";
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -32,10 +33,26 @@ class _second_screenState extends State<second_screen> {
     super.initState();
   }
 
+
+  Future<bool> checkdates(final doc_id) async {
+    Stream<QuerySnapshot> snapshot1=Firestore.instance.collection("board").document(doc_id).collection("Crimes").where("Crime",arrayContains: "Murder").snapshots();
+    var c1=snapshot1.isEmpty;
+    print(c1.toString());
+    /*if(c1==0)
+      {
+        return false;
+      }
+    else
+      {
+        return true;
+      }*/
+
+
+  }
   Widget cardtemplate(name,Nationality,docid){
     return Card(
       margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
-      child: Column(
+      child: Row(
         children: <Widget>[
           Text(
             name,
@@ -110,9 +127,20 @@ class _second_screenState extends State<second_screen> {
 
                 return new ListView(
                   children: snapshot.data.documents.map((document) {
+
+
                     var doc_id=document.documentID;
-                    return cardtemplate(document['Name'],document['Nationality'],doc_id);
-                  }).toList(),
+                    //List<DocumentSnapshot> productsnap = document.reference.collection("Crimes").where("Crime",arrayContains: "Murder").getDocuments().documents;
+                    //checkdates(doc_id);
+                    //var snap1= document.reference.collection("Crimes").where("Crime",arrayContains: "Murder").getDocuments();
+                   // Future<QuerySnapshot> snap1 = doc_id2.;
+
+                    //QuerySnapshot snapshot1= Firestore.instance.collection("board").document(doc_id).collection("Crimes").where("Crime",arrayContains: "Murder").getDocuments() ;
+                    //var c1=snapshot1.documents.length;
+                   // print(snap1);
+                      return cardtemplate(document['Name'], document['Nationality'], doc_id);
+
+                    }).toList(),
                 );
 
 
