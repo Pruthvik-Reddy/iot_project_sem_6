@@ -4,6 +4,7 @@ import 'authenticate/authenticate.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'profile_page.dart';
 import 'package:intl/intl.dart';
+import 'package:first_project/syncfusion/bar_chart.dart';
 
 // ignore: camel_case_types
 class second_screen2 extends StatefulWidget {
@@ -23,27 +24,37 @@ class _second_screenState2 extends State<second_screen2> {
 
 
   @override
-  void initState() async{
+  void initState() {
     // TODO: implement initState
     super.initState();
+    function_1();
+
+  }
+
+
+  function_1() async{
     QuerySnapshot snap_2=await Firestore.instance.collection("board").where("present",isEqualTo: "True").getDocuments();
     var lis_1=snap_2.documents;
     for(int i=0;i<lis_1.length;i++)
-      {
-        var doc_id=lis_1[i].documentID;
-        var now= new DateTime.now();
-        var formatter=new DateFormat('MM/dd/yyyy');
-        String formatdate = formatter.format(now);
-        var date_to_be_added=[formatdate];
+    {
+      var doc_id=lis_1[i].documentID;
+      var now= new DateTime.now();
+      var formatter=new DateFormat('MM/dd/yyyy');
+      String formatdate = formatter.format(now);
+      var date_to_be_added=[formatdate];
 
-        DocumentReference doc_ref=Firestore.instance.collection("board").document(doc_id).collection("Dates").document();
-        var doc_id5= await get_data(doc_ref);
-        Firestore.instance.collection("board").document(doc_id).collection("Dates").document(doc_id5).updateData({"Date":FieldValue.arrayUnion(date_to_be_added)});
+      QuerySnapshot snap_3=await Firestore.instance.collection("board").document(doc_id).collection("Dates").getDocuments();
+      var lis_2=snap_3.documents;
+      //print(lis_2[0].documentID);
+
+      DocumentReference doc_ref=Firestore.instance.collection("board").document(doc_id).collection("Dates").document();
+      var doc_id5= await get_data(doc_ref);
+      //print(doc_id5);
+      Firestore.instance.collection("board").document(doc_id).collection("Dates").document(lis_2[0].documentID).updateData({"Date":FieldValue.arrayUnion(date_to_be_added)});
 
 
-      }
+    }
   }
-
 
   Widget cardtemplate(name,Nationality,docid){
     return Card(
@@ -107,11 +118,13 @@ class _second_screenState2 extends State<second_screen2> {
               );
             }).toList(),
             onChanged: (_) => logout(),
+
           )
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> bar_chart()));
 
         },
         child: Icon(Icons.search),
