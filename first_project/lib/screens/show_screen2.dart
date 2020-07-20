@@ -8,6 +8,7 @@ import 'package:first_project/syncfusion/bar_chart.dart';
 import 'package:first_project/syncfusion/month.dart';
 import 'package:first_project/syncfusion/years.dart';
 import 'package:first_project/syncfusion/country_chart.dart';
+import 'stats_monitor.dart';
 
 // ignore: camel_case_types
 class second_screen2 extends StatefulWidget {
@@ -127,7 +128,7 @@ class _second_screenState2 extends State<second_screen2> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> country_chart()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> stats_monitor()));
 
         },
         child: Icon(Icons.search),
@@ -140,7 +141,9 @@ class _second_screenState2 extends State<second_screen2> {
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) return new Text('Loading...');
 
+
           return new ListView(
+
             children: snapshot.data.documents.map((document) {
 
 

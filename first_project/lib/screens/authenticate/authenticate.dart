@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:first_project/services/auth.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
-import 'package:first_project/screens/show_screen2.dart';
+import 'package:first_project/screens/stats_monitor.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class sign_in extends StatefulWidget {
@@ -102,7 +102,7 @@ class _sign_inState extends State<sign_in> {
                         else {
                           print('signed in');
                           print(result.uid);
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> second_screen2()));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> stats_monitor()));
 
                         }
                       },
@@ -127,7 +127,7 @@ class _sign_inState extends State<sign_in> {
                       child: Center(
                         child: GoogleSignInButton(
                           onPressed: () => _auth1.googleSignin().whenComplete(() {
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> second_screen2()));
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> stats_monitor()));
                           }),
 
 
@@ -154,11 +154,11 @@ class _sign_inState extends State<sign_in> {
     final AuthResult authResult = await _auth.signInWithCredential(credential);
     FirebaseUser user = authResult.user;
     print("signed in " + user.displayName);
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> second_screen2()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> stats_monitor()));
 
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> second_screen2()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> stats_monitor()));
     var router = new MaterialPageRoute(builder: (BuildContext context){
-      return new second_screen2();});
+      return new stats_monitor();});
     Navigator.of(context).push(router);
     return user;
   }
