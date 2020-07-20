@@ -5,6 +5,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'profile_page.dart';
 import 'package:intl/intl.dart';
 import 'package:first_project/syncfusion/bar_chart.dart';
+import 'package:first_project/syncfusion/month.dart';
+import 'package:first_project/syncfusion/years.dart';
+import 'package:first_project/syncfusion/country_chart.dart';
 
 // ignore: camel_case_types
 class second_screen2 extends StatefulWidget {
@@ -124,7 +127,7 @@ class _second_screenState2 extends State<second_screen2> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> bar_chart()));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> country_chart()));
 
         },
         child: Icon(Icons.search),
