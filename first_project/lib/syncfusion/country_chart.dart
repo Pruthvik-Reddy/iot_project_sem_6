@@ -8,6 +8,7 @@ import 'package:syncfusion_flutter_core/core.dart';
 import 'package:syncfusion_flutter_core/core_internal.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_core/localizations.dart';
+import 'package:first_project/screens/navigation_screen.dart';
 
 class country_chart extends StatefulWidget {
   @override
@@ -72,103 +73,122 @@ class _country_chartState extends State<country_chart> {
         ),
 
       ),
-      body: Container(
-        child: FutureBuilder(
-          future: function_2(),
+      body: Column(
+        children: <Widget>[
+          Container(
+            child: FutureBuilder(
+              future: function_2(),
 
-          builder: (context,snapshot){
-            //print(snapshot.data);
-            print("Inside2");
-            return Container(
-              height: 550,
-              child: SfMaps(
-                title: MapTitle(
-                  text: "Stats of Visitors in Different Countries",
-                  padding: EdgeInsets.only(top: 15, bottom: 30),
-                ),
-                layers: <MapLayer>[
-                  MapShapeLayer(
-                    delegate: MapShapeLayerDelegate(
-                      shapeFile: 'assets/world_map.json',
-                      shapeDataField: 'name',
-                      dataCount: _worldPopulationDensityDetails.length,
-                      primaryValueMapper: (int index) =>
-                      _worldPopulationDensityDetails[index].countryName,
-                      shapeColorValueMapper: (int index) =>
-                      _worldPopulationDensityDetails[index].density,
-                      shapeTooltipTextMapper: (int index) =>
-                      _worldPopulationDensityDetails[index].countryName +
-                          ' : ' +
-                          _numberFormat
-                              .format(
-                              _worldPopulationDensityDetails[index].density)
-                              .toString() +
-                          ' per sq. km.',
-                      shapeColorMappers: const <MapColorMapper>[
-                        MapColorMapper(
-                            from: 0,
-                            to: 25,
-                            color: Color.fromRGBO(128, 159, 255, 1),
-                            text: '<25'),
-                        MapColorMapper(
-                            from: 25,
-                            to: 50,
-                            color: Color.fromRGBO(51, 102, 255, 1),
-                            text: '25-50'),
-                        MapColorMapper(
-                            from: 50,
-                            to: 100,
-                            color: Color.fromRGBO(0, 57, 230, 1),
-                            text: '50 - 100'),
-                        MapColorMapper(
-                            from: 100,
-                            to: 250,
-                            color: Color.fromRGBO(0, 51, 204, 1),
-                            text: '100 - 250'),
-                        MapColorMapper(
-                            from: 250,
-                            to: 500,
-                            color: Color.fromRGBO(0, 45, 179, 1),
-                            text: '250 - 500'),
-                        MapColorMapper(
-                            from: 500,
-                            to: 1000,
-                            color: Color.fromRGBO(0, 38, 153, 1),
-                            text: '500 - 1k'),
-                        MapColorMapper(
-                            from: 1000,
-                            to: 10000,
-                            color: Color.fromRGBO(0, 32, 128, 1),
-                            text: '1k - 10k'),
-
-                      ],
+              builder: (context,snapshot){
+                //print(snapshot.data);
+                print("Inside2");
+                return Container(
+                  height: 500,
+                  child: SfMaps(
+                    title: MapTitle(
+                      text: "Stats of Visitors in Different Countries",
+                      padding: EdgeInsets.only(top: 15, bottom: 30),
                     ),
+                    layers: <MapLayer>[
+                      MapShapeLayer(
+                        delegate: MapShapeLayerDelegate(
+                          shapeFile: 'assets/world_map.json',
+                          shapeDataField: 'name',
+                          dataCount: _worldPopulationDensityDetails.length,
+                          primaryValueMapper: (int index) =>
+                          _worldPopulationDensityDetails[index].countryName,
+                          shapeColorValueMapper: (int index) =>
+                          _worldPopulationDensityDetails[index].density,
+                          shapeTooltipTextMapper: (int index) =>
+                          _worldPopulationDensityDetails[index].countryName +
+                              ' : ' +
+                              _numberFormat
+                                  .format(
+                                  _worldPopulationDensityDetails[index].density)
+                                  .toString() +
+                              ' per sq. km.',
+                          shapeColorMappers: const <MapColorMapper>[
+                            MapColorMapper(
+                                from: 0,
+                                to: 25,
+                                color: Color.fromRGBO(128, 159, 255, 1),
+                                text: '<25'),
+                            MapColorMapper(
+                                from: 25,
+                                to: 50,
+                                color: Color.fromRGBO(51, 102, 255, 1),
+                                text: '25-50'),
+                            MapColorMapper(
+                                from: 50,
+                                to: 100,
+                                color: Color.fromRGBO(0, 57, 230, 1),
+                                text: '50 - 100'),
+                            MapColorMapper(
+                                from: 100,
+                                to: 250,
+                                color: Color.fromRGBO(0, 51, 204, 1),
+                                text: '100 - 250'),
+                            MapColorMapper(
+                                from: 250,
+                                to: 500,
+                                color: Color.fromRGBO(0, 45, 179, 1),
+                                text: '250 - 500'),
+                            MapColorMapper(
+                                from: 500,
+                                to: 1000,
+                                color: Color.fromRGBO(0, 38, 153, 1),
+                                text: '500 - 1k'),
+                            MapColorMapper(
+                                from: 1000,
+                                to: 10000,
+                                color: Color.fromRGBO(0, 32, 128, 1),
+                                text: '1k - 10k'),
 
-                    showLegend: true,
-                    enableShapeTooltip: true,
-                    strokeColor: Colors.redAccent,
-                    legendSettings: const MapLegendSettings(
-                        position: MapLegendPosition.bottom,
-                        iconType: MapIconType.square,
-                        overflowMode: MapLegendOverflowMode.wrap,
-                        padding: EdgeInsets.only(top: 15)),
-                    dataLabelSettings: MapDataLabelSettings(
-                        textStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize:
-                            Theme.of(context).textTheme.caption.fontSize)),
+                          ],
+                        ),
 
-                  ),
-                ],
+                        showLegend: true,
+                        enableShapeTooltip: true,
+                        strokeColor: Colors.redAccent,
+                        legendSettings: const MapLegendSettings(
+                            position: MapLegendPosition.bottom,
+                            iconType: MapIconType.square,
+                            overflowMode: MapLegendOverflowMode.wrap,
+                            padding: EdgeInsets.only(top: 15)),
+                        dataLabelSettings: MapDataLabelSettings(
+                            textStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize:
+                                Theme.of(context).textTheme.caption.fontSize)),
+
+                      ),
+                    ],
 
 
 
-              ),);
-            print("Inside");
-          },
+                  ),);
+                print("Inside");
+              },
 
-        ),
+            ),
+          ),
+          Container(
+            child: ListTile(
+              title: Text("Return To Previous Page"),
+              leading: CircleAvatar(
+                  backgroundColor: Colors.green,
+                  backgroundImage: NetworkImage('https://www.pinclipart.com/picdir/middle/130-1304091_left-svg-icon-free-icon-back-arrow-png.png')
+              ),
+              onTap:(){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> navigation_screen()));
+              },
+
+            ),
+
+          )
+
+        ],
       ),
     );
 

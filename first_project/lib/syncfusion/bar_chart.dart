@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:async';
+import 'package:first_project/screens/navigation_screen.dart';
 
 class bar_chart extends StatefulWidget {
   @override
@@ -87,47 +88,68 @@ class _bar_chartState extends State<bar_chart> {
         ),
 
       ),
-          body: Container(
-            child: FutureBuilder(
-              future: function_2(),
-              builder: (context,snapshot){
-                //print(snapshot.data);
-                return Container(
-                  height: 550,
-                  child: SfCartesianChart(
-                    title: ChartTitle(
-                        text: "Number of Persons Per Country"
-                    ),
-                    primaryXAxis: CategoryAxis(
-                        title: AxisTitle(
-                            text: "Country"
-                        )
-                    ),
-                    primaryYAxis: NumericAxis(
-                        title: AxisTitle(
-                            text: "Number of People"
-                        )
-                    ),
-                    legend: Legend(
-                        isVisible: true
-                    ),
+          body: Column(
+            children: <Widget>[
+              Container(
+                child: FutureBuilder(
+                  future: function_2(),
+                  builder: (context,snapshot){
+                    //print(snapshot.data);
+                    return Container(
+                      height: 500,
+                      child: SfCartesianChart(
+                        title: ChartTitle(
+                            text: "Number of Persons Per Country"
+                        ),
+                        primaryXAxis: CategoryAxis(
+                            title: AxisTitle(
+                                text: "Country"
+                            )
+                        ),
+                        primaryYAxis: NumericAxis(
+                            title: AxisTitle(
+                                text: "Number of People"
+                            )
+                        ),
+                        legend: Legend(
+                            isVisible: true
+                        ),
 
-                    series: <ChartSeries>  [
-                      ColumnSeries<country_data,String>(
-                          name: "Country",
-                          dataSource: snapshot.data,
+                        series: <ChartSeries>  [
+                          ColumnSeries<country_data,String>(
+                              name: "Country",
+                              dataSource: snapshot.data,
 
-                          xValueMapper: (country_data country,_)=>country.x,
-                          yValueMapper: (country_data country,_)=>country.y,
-                          dataLabelSettings: DataLabelSettings(
-                            isVisible: true,
+                              xValueMapper: (country_data country,_)=>country.x,
+                              yValueMapper: (country_data country,_)=>country.y,
+                              dataLabelSettings: DataLabelSettings(
+                                isVisible: true,
 
+                              )
                           )
-                      )
-                    ],
-                  ),);
-              },
-            ),
+                        ],
+                      ),);
+                  },
+                ),
+
+              ),
+              Container(
+                child: ListTile(
+                  title: Text("Return To Previous Page"),
+                  leading: CircleAvatar(
+                      backgroundColor: Colors.green,
+                      backgroundImage: NetworkImage('https://www.pinclipart.com/picdir/middle/130-1304091_left-svg-icon-free-icon-back-arrow-png.png')
+                  ),
+                  onTap:(){
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> navigation_screen()));
+                  },
+
+                ),
+
+              )
+
+            ],
+
           ),
     );
     //print(country_number[0]);
